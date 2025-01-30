@@ -9,6 +9,12 @@
  */
 
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -28,11 +34,14 @@ class Student {
 }
 
 class StudentManagement {
+    Scanner inputManagement = new Scanner(System.in);
     ArrayList<Student> students = new ArrayList<>();
+
 
     public void addStudent(String name, int age) {
         students.add(new Student(name, age));
         System.out.println("Студент: " + name + " добавлен");
+
     }
 
     public void delStudent(String name) {
@@ -66,6 +75,31 @@ class StudentManagement {
         System.out.println("Ученик ненайден");
     }
 
+    public void editStudentDetails(String name) {
+        for (int i = 0; i < students.size(); i++) {
+            if (students.get(i).name.equalsIgnoreCase(name)) {
+                System.out.print("Введите изменённое имя студента: ");
+                String EditName = inputManagement.nextLine();
+
+                System.out.print("Введите изменённый возраст студента: ");
+                int EditAge = inputManagement.nextInt();
+
+                students.set(i, new Student(EditName, EditAge));
+                return;
+            }
+        }
+        System.out.println("Ученик ненайден");
+    }
+
+//    public void addFile() throws FileNotFoundException {
+//        File file = new File("src/List");
+//        PrintWriter pw = new PrintWriter(file);
+//        for (int i = 0; i < students.size(); i++) {
+//            System.out.println(i);
+//        }
+
+    }
+
 }
 
 class Menu {
@@ -73,13 +107,15 @@ class Menu {
     StudentManagement list = new StudentManagement();
     int choice;
 
-    public void startMenu() {
+    public void startMenu() throws IOException {
         do {
             System.out.println("\n1. Добавить студента");
             System.out.println("2. Удалить студента");
             System.out.println("3. Показать всех студентов");
             System.out.println("4. Найти студента");
-            System.out.println("5. Выход");
+            System.out.println("5. Изменить данные студента");
+            System.out.println("6. Сохранить в файл");
+            System.out.println("0. Выход");
             System.out.print("Выберите действие: ");
             choice = input.nextInt();
             input.nextLine();
@@ -107,7 +143,12 @@ class Menu {
                     list.findStudent(findName);
                     break;
                 case 5:
-                    System.out.println("test New branch#1");
+                    System.out.println("Введите имя для изменения: ");
+                    String editName = input.nextLine();
+                    list.editStudentDetails(editName);
+                    break;
+//                case 6:
+//                    list.addFile();
 
                 case 0:
                     System.out.println("Выход из программы!");
@@ -120,9 +161,10 @@ class Menu {
 }
 
 public class StudentsList {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Menu menu = new Menu();
         menu.startMenu();
+
 
     }
 }
