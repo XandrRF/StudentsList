@@ -1,4 +1,4 @@
-/*
+/* New branch#1
 Задача: Управление списком студентов
 Напишите программу, которая позволяет управлять списком студентов в классе.
 Каждый студент имеет имя и возраст. Программа должна предоставлять следующие функции:
@@ -107,12 +107,15 @@ class Menu {
                     list.findStudent(findName);
                     break;
                 case 5:
+                    System.out.println("test New branch#1");
+
+                case 0:
                     System.out.println("Выход из программы!");
                     break;
                 default:
                     System.out.println("Не верный выбор :)");
             }
-        } while (choice != 5);
+        } while (choice != 0);
     }
 }
 
